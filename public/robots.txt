@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marnickvda.github.io/sitemap.xml

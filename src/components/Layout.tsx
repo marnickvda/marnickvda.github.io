@@ -1,6 +1,6 @@
 import { useId } from 'react'
 
-import { Intro, IntroFooter } from '@/components/Intro'
+import { Intro } from '@/components/Intro'
 import { ProfileLanyard } from '@/components/ProfileLanyard'
 import { StarField } from '@/components/StarField'
 
@@ -67,15 +67,9 @@ function Glow() {
   )
 }
 
-function FixedSidebar({
-  main,
-  footer,
-}: {
-  main: React.ReactNode
-  footer: React.ReactNode
-}) {
+function FixedSidebar({ main }: { main: React.ReactNode }) {
   return (
-    <div className="relative flex-none overflow-hidden px-6 lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex lg:px-0">
+    <header className="relative flex-none overflow-hidden px-6 lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex lg:px-0">
       <Glow />
       <div className="relative flex w-full lg:pointer-events-auto lg:mr-[calc(max(2rem,50%-38rem)+40rem)] lg:min-w-[32rem] lg:overflow-y-auto lg:overflow-x-hidden lg:pl-[max(4rem,calc(50%-38rem))]">
         <div className="mx-auto max-w-lg lg:mx-0 lg:flex lg:w-96 lg:max-w-none lg:flex-col">
@@ -89,23 +83,28 @@ function FixedSidebar({
               {main}
             </div>
           </div>
-          <div className="flex flex-1 items-end justify-center pb-4 lg:justify-start lg:pb-6">
-            {footer}
-          </div>
+          {/* Keeps the intro a little above the middle beside the timeline */}
+          <div className="hidden flex-1 lg:block" />
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <FixedSidebar main={<Intro />} footer={<IntroFooter />} />
+      <a
+        href="#projects"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-gray-950"
+      >
+        Skip to projects
+      </a>
+      <FixedSidebar main={<Intro />} />
       <ProfileLanyard />
       <div className="relative flex-auto">
         <Timeline />
-        <main className="space-y-20 py-20 sm:space-y-32 sm:py-32">
+        <main id="projects" tabIndex={-1} className="space-y-20 py-20 sm:space-y-32 sm:py-32">
           {children}
         </main>
       </div>

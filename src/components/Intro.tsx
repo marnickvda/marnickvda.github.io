@@ -23,10 +23,11 @@ export function Intro() {
         Software, built <span className="text-sky-300">with care</span>
       </h1>
       <p className="mt-4 text-sm/6 text-gray-300">
-        I&apos;m Marnick van der Arend, a software engineer. Writing code has
-        never been faster, which makes the rest matter more: understanding the
-        problem, getting the details right and finishing what I start. This is
-        a selection of what I have built.
+        I&apos;m Marnick van der Arend, a software engineer at Ingka Digital
+        (IKEA), based in Utrecht, the Netherlands. Writing code has never been
+        faster, which makes the rest matter more: understanding the problem,
+        getting the details right and finishing what I start. This is a
+        selection of what I have built.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-x-1 gap-y-3 sm:gap-x-2 lg:justify-start">
         <IconLink
@@ -38,24 +39,16 @@ export function Intro() {
         >
           GitHub
         </IconLink>
+        <IconLink
+          href="https://linkedin.com/in/marnickvda"
+          target="_blank"
+          rel="noreferrer"
+          icon={LinkedInIcon}
+          className="flex-none"
+        >
+          LinkedIn
+        </IconLink>
       </div>
     </>
-  )
-}
-
-export function IntroFooter() {
-  return (
-    <p className="flex items-baseline gap-x-2 text-[0.8125rem]/6 text-gray-500">
-      Connect with me → {' '}
-      <IconLink
-        target="_blank"
-        rel="noreferrer"
-        href="https://linkedin.com/in/marnickvda"
-        icon={LinkedInIcon}
-        compact
-      >
-        Marnick van der Arend
-      </IconLink>
-    </p>
   )
 }

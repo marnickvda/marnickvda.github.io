@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 
-export type GalleryImage = { src: string; alt: string }
+export type GalleryImage = {
+  src: string
+  alt: string
+  width: number
+  height: number
+}
 
 function Arrow({ className }: { className?: string }) {
   return (
@@ -28,51 +33,51 @@ function Lightbox({
   onSelect: (index: number) => void
   onClose: () => void
 }) {
-  let closeRef = useRef<React.ElementRef<'button'>>(null)
+  let dialogRef = useRef<React.ElementRef<'dialog'>>(null)
   let many = images.length > 1
   let step = useCallback(
     (by: number) => onSelect((index + by + images.length) % images.length),
     [index, images.length, onSelect],
   )
 
+  // A modal <dialog> keeps focus inside it and makes the page behind it inert.
+  // It is removed from the page as it closes, so focus goes back by hand.
   useEffect(() => {
+    let dialog = dialogRef.current
+    if (!dialog) {
+      return
+    }
     let opener = document.activeElement as HTMLElement | null
-    closeRef.current?.focus()
+    dialog.showModal()
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = ''
+      dialog.close()
       opener?.focus()
     }
   }, [])
-
-  useEffect(() => {
-    let onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-      if (many && event.key === 'ArrowLeft') step(-1)
-      if (many && event.key === 'ArrowRight') step(1)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [many, onClose, step])
 
   let image = images[index]
   let button =
     'flex h-11 w-11 flex-none items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300'
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
       aria-label={image.alt}
-      className="fixed inset-0 z-[70] flex flex-col bg-gray-950/90 backdrop-blur-sm"
+      className="fixed inset-0 z-[70] m-0 flex h-full max-h-none w-full max-w-none flex-col bg-gray-950/90 p-0 backdrop-blur-sm backdrop:bg-transparent"
       onClick={onClose}
+      onCancel={onClose}
+      onKeyDown={(event) => {
+        if (many && event.key === 'ArrowLeft') step(-1)
+        if (many && event.key === 'ArrowRight') step(1)
+      }}
     >
       <div className="flex items-center justify-between p-4 text-sm text-white/70">
         <span aria-live="polite">
           {many ? `${index + 1} / ${images.length}` : ''}
         </span>
         <button
-          ref={closeRef}
           type="button"
           aria-label="Close"
           className={button}
@@ -125,7 +130,7 @@ function Lightbox({
         )}
       </div>
       <p className="px-4 pb-6 text-center text-sm text-white/70">{image.alt}</p>
-    </div>
+    </dialog>
   )
 }
 
@@ -133,7 +138,14 @@ function Lightbox({
  * One or more screenshots of a project: the first is shown large, the others
  * as thumbnails, and a click on any of them opens it full screen.
  */
-export function Gallery({ images }: { images: GalleryImage[] }) {
+export function Gallery({
+  images,
+  eager = false,
+}: {
+  images: GalleryImage[]
+  /** For the first screenshot on the page; the others load as they come near. */
+  eager?: boolean
+}) {
   let [open, setOpen] = useState<number | null>(null)
   let close = useCallback(() => setOpen(null), [])
   let [first, ...rest] = images
@@ -151,7 +163,14 @@ export function Gallery({ images }: { images: GalleryImage[] }) {
         aria-label={`Enlarge: ${first.alt}`}
         onClick={() => setOpen(0)}
       >
-        <img src={first.src} alt={first.alt} className="block w-full" />
+        <img
+          src={first.src}
+          alt={first.alt}
+          width={first.width}
+          height={first.height}
+          loading={eager ? 'eager' : 'lazy'}
+          className="block h-auto w-full"
+        />
         {ring}
       </button>
       {rest.length > 0 && (

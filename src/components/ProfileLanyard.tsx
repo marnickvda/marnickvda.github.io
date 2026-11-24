@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 
-import Lanyard from '@/components/Lanyard'
 import photo from '@/images/marnick.jpg'
+
+// three.js is most of the site's JavaScript; loading it apart from the page
+// lets the text appear without waiting for it.
+const Lanyard = lazy(() => import('@/components/Lanyard'))
 
 /**
  * The badge with the profile photo. Its canvas covers the whole viewport so
@@ -45,12 +48,14 @@ export function ProfileLanyard() {
   // timeline on large ones, like the sidebar itself.
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-[60] h-screen lg:fixed lg:inset-0 lg:h-auto">
-      <Lanyard
-        frontImage={photo}
-        anchor={anchor}
-        size={0.28}
-        strapLength={0.12}
-      />
+      <Suspense fallback={null}>
+        <Lanyard
+          frontImage={photo}
+          anchor={anchor}
+          size={0.28}
+          strapLength={0.12}
+        />
+      </Suspense>
     </div>
   )
 }

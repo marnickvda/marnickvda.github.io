@@ -65,6 +65,11 @@ const constellations: Array<Array<Star>> = [
   ],
 ]
 
+// With reduced motion the sky is simply there: no fading, twinkling or drawing.
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 function Star({
   blurId,
   point: [cx, cy, dim, blur],
@@ -77,6 +82,11 @@ function Star({
 
   useEffect(() => {
     if (!groupRef.current || !ref.current) {
+      return
+    }
+
+    if (prefersReducedMotion()) {
+      groupRef.current.style.opacity = '1'
       return
     }
 
@@ -140,6 +150,12 @@ function Constellation({
 
   useEffect(() => {
     if (!ref.current) {
+      return
+    }
+
+    if (prefersReducedMotion()) {
+      ref.current.style.strokeDashoffset = '0'
+      ref.current.style.visibility = 'visible'
       return
     }
 
