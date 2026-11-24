@@ -20,12 +20,13 @@ export function Intro() {
   return (
     <>
       <h1 className="mt-8 font-display text-4xl/tight font-light text-white">
-        I&apos;m Marnick, a builder who loves{' '}
-        <span className="text-sky-300">making cool stuff</span>
+        Software, built <span className="text-sky-300">with care</span>
       </h1>
       <p className="mt-4 text-sm/6 text-gray-300">
-        I build things that make life a little better for the people around
-        me, and for myself. This is what I have been working on.
+        I&apos;m Marnick van der Arend, a software engineer. Writing code has
+        never been faster, which makes the rest matter more: understanding the
+        problem, getting the details right and finishing what I start. This is
+        a selection of what I have built.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-x-1 gap-y-3 sm:gap-x-2 lg:justify-start">
         <IconLink

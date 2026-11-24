@@ -100,18 +100,6 @@ export function Projects() {
         </p>
       </Article>
       <Article
-        id="abitofsoftware-com-launch"
-        date="2023-11-12T00:00Z"
-        title="abitofsoftware.com launch"
-      >
-        <p>
-          I&apos;ve put together this space to share techie updates, spill my thoughts in blog posts, and just geek out about software development.
-        </p>
-        <p>
-          Whether you&apos;re a professional or just starting, we&apos;ve got a bit about software for you. I&apos;m all about sharing what I know in a way that&apos;s easy to understand. Get in the loop with the latest tech buzz and explore the world of full-stack development together!
-        </p>
-      </Article>
-      <Article
         id="lamp-framework"
         date="2023-03-16T00:00Z"
         title="LAMP Framework"
