@@ -81,7 +81,7 @@ function FixedSidebar({
         <div className="mx-auto max-w-lg lg:mx-0 lg:flex lg:w-96 lg:max-w-none lg:flex-col">
           <div
             id="lanyard-anchor"
-            className="h-96 lg:h-auto lg:min-h-[20rem] lg:flex-[3]"
+            className="h-[48vh] lg:h-auto lg:min-h-[20rem] lg:flex-[3]"
           />
           <div className="pb-16 sm:pb-20 lg:pb-10">
             <div className="relative">
