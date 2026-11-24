@@ -15,7 +15,7 @@ npm run build    # type-check and build to dist/
 ## Hosting
 
 Every push to `main` is built and published to GitHub Pages by
-`.github/workflows/deploy.yml`: <https://marnickvda.github.io/portfolio/>.
+`.github/workflows/deploy.yml`: <https://marnickvda.github.io/>.
 
 ## Where things are
 
